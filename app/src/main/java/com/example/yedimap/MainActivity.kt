@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
+import com.example.yedimap.ui.language.LanguageSelectionScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +65,12 @@ fun YediMapRoot() {
     if (showSplash.value) {
         SplashScreen()
     } else {
-        YediMapApp()
+        LanguageSelectionScreen(
+            onEnglishClick = {
+                // Şimdilik boş, ekran yapılmadı
+                // Sonradan: navController.navigate(Screen.ProfileSelection.route)
+            }
+        )
     }
 }
 @OptIn(ExperimentalMaterial3Api::class)
