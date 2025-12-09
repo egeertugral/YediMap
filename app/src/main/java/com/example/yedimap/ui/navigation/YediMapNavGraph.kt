@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import com.example.yedimap.ui.map.MapScreen
 import com.example.yedimap.ui.notifications.NotificationsScreen
 import com.example.yedimap.ui.schedule.ScheduleScreen
+import com.example.yedimap.ui.home.HomeScreen
 
 @Composable
 fun YediMapNavGraph(
@@ -16,9 +17,12 @@ fun YediMapNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Map.route,
+        startDestination = Screen.Home.route,
         modifier = modifier
     ) {
+        composable(Screen.Home.route) {
+            HomeScreen()
+        }
         composable(Screen.Map.route) {
             MapScreen()
         }
@@ -29,4 +33,5 @@ fun YediMapNavGraph(
             NotificationsScreen()
         }
     }
+
 }
