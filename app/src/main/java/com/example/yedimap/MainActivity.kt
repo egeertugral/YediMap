@@ -39,7 +39,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import com.example.yedimap.ui.language.LanguageSelectionScreen
-
+import com.example.yedimap.ui.profile.ProfileSelectionScreen
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,26 +53,50 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+enum class OnboardingStep {
+    LANGUAGE,
+    PROFILE,
+    MAIN
+}
+
 @Composable
 fun YediMapRoot() {
-    // Başta splash görünsün
-    val showSplash = remember { mutableStateOf(true) }
+    var showSplash by remember { mutableStateOf(true) }
+    var currentStep by remember { mutableStateOf(OnboardingStep.LANGUAGE) }
 
-    // 2.5 saniye bekleyip ana uygulamaya geç
     LaunchedEffect(Unit) {
-        delay(2500) // 2500 ms = 2.5 saniye
-        showSplash.value = false
+        delay(2000)
+        showSplash = false
     }
 
-    if (showSplash.value) {
+    if (showSplash) {
         SplashScreen()
     } else {
-        LanguageSelectionScreen(
-            onEnglishClick = {
-                // Şimdilik boş, ekran yapılmadı
-                // Sonradan: navController.navigate(Screen.ProfileSelection.route)
+        when (currentStep) {
+            OnboardingStep.LANGUAGE -> {
+                LanguageSelectionScreen(
+                    onEnglishClick = {
+                        currentStep = OnboardingStep.PROFILE
+                    }
+                )
             }
-        )
+            OnboardingStep.PROFILE -> {
+                ProfileSelectionScreen(
+                    onBackClick = { currentStep = OnboardingStep.LANGUAGE },
+                    onStudentClick = {
+                        // TODO: ileride Student onboarding / main app
+                        currentStep = OnboardingStep.MAIN
+                    },
+                    onVisitorClick = {
+                        // TODO: ileride Visitor onboarding / main app
+                        currentStep = OnboardingStep.MAIN
+                    }
+                )
+            }
+            OnboardingStep.MAIN -> {
+                YediMapApp()
+            }
+        }
     }
 }
 @OptIn(ExperimentalMaterial3Api::class)
