@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">YediMap</string>
 
+    <string name="nav_home">Home</string>
     <string name="nav_map">Map</string>
     <string name="nav_schedule">Schedule</string>
     <string name="nav_notifications">Notifications</string>

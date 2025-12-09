@@ -7,12 +7,19 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.yedimap.R
+import androidx.compose.material.icons.filled.Home
 
 sealed class Screen(
     val route: String,
     @StringRes val titleRes: Int,
     val icon: ImageVector
 ) {
+    object Home : Screen(
+        route = "home",
+        titleRes = R.string.nav_home,   // bunu az sonra ekleyeceğiz
+        icon = Icons.Filled.Home
+    )
+
     object Map : Screen(
         route = "map",
         titleRes = R.string.nav_map,
@@ -32,6 +39,5 @@ sealed class Screen(
     )
 
     companion object {
-        val bottomNavItems = listOf(Map, Schedule, Notifications)
-    }
+        val bottomNavItems = listOf(Home, Map, Schedule, Notifications)    }
 }
