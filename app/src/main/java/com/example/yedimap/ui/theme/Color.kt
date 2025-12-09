@@ -12,3 +12,5 @@ val Pink40 = Color(0xFF7D5260)
 
 val PurpleSplash = Color(0xFF52489C)
 val OffWhite = Color(0xFFFEFEFD)
+
+val SplashBackground = Color(0xFFE9E2F2)
