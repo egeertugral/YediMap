@@ -42,6 +42,8 @@ import com.example.yedimap.ui.language.LanguageSelectionScreen
 import com.example.yedimap.ui.profile.ProfileSelectionScreen
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.example.yedimap.ui.theme.PrimaryPurple
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,21 +109,11 @@ fun YediMapApp() {
     val currentRoute = navBackStackEntry?.destination?.route
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "YediMap",
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                }
-            )
-        },
         bottomBar = {
             NavigationBar(
-                containerColor = PurpleSplash,  // #52489C arka plan
+                containerColor = PrimaryPurple,  // #52489C arka plan
                 contentColor = Color.White,
-                        modifier = Modifier.height(75.dp)
+                        modifier = Modifier.height(56.dp)
             ) {
                 Screen.bottomNavItems.forEach { screen ->
                     val selected = currentRoute == screen.route

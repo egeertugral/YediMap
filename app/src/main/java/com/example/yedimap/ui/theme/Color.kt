@@ -14,3 +14,4 @@ val PurpleSplash = Color(0xFF52489C)
 val OffWhite = Color(0xFFFEFEFD)
 
 val SplashBackground = Color(0xFFE9E2F2)
+val PrimaryPurple = Color(0xFF614184)
