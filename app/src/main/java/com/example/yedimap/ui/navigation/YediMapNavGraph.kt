@@ -9,6 +9,7 @@ import com.example.yedimap.ui.map.MapScreen
 import com.example.yedimap.ui.notifications.NotificationsScreen
 import com.example.yedimap.ui.schedule.ScheduleScreen
 import com.example.yedimap.ui.home.HomeScreen
+import com.example.yedimap.ui.myprofile.MyProfileScreen
 
 @Composable
 fun YediMapNavGraph(
@@ -21,7 +22,9 @@ fun YediMapNavGraph(
         modifier = modifier
     ) {
         composable(Screen.Home.route) {
-            HomeScreen()
+            HomeScreen(onProfileClick = {
+                navController.navigate(Screen.MyProfile.route)
+            })
         }
         composable(Screen.Map.route) {
             MapScreen()
@@ -31,6 +34,9 @@ fun YediMapNavGraph(
         }
         composable(Screen.Notifications.route) {
             NotificationsScreen()
+        }
+        composable(Screen.MyProfile.route) {
+            MyProfileScreen(onBackClick = { navController.popBackStack() })
         }
     }
 
