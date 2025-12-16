@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.yedimap.R
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 
 sealed class Screen(
     val route: String,
@@ -36,6 +37,12 @@ sealed class Screen(
         route = "notifications",
         titleRes = R.string.nav_notifications,
         icon = Icons.Filled.Notifications
+    )
+
+    object MyProfile : Screen(
+        route = "my_profile",
+        titleRes = R.string.nav_my_profile, // bunu strings.xml'e ekleyeceğiz
+        icon = Icons.Filled.Person // ikon zorunlu olduğu için veriyoruz
     )
 
     companion object {
