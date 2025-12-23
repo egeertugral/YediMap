@@ -1,5 +1,6 @@
 package com.example.yedimap.ui.drawer
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -35,7 +36,8 @@ fun DrawerMenu(
     modifier: Modifier = Modifier,
     name: String = "Kutay Büyükboyacı",
     email: String = "kutay.buyukboyaci@std.yeditepe.edu.tr",
-    onClose: () -> Unit = {}
+    onClose: () -> Unit = {},
+    onMyProfileClick: () -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -98,7 +100,15 @@ fun DrawerMenu(
         DrawerItem(icon = Icons.Outlined.Home, title = "Home")
         Spacer(modifier = Modifier.height(12.dp))
 
-        DrawerItem(icon = Icons.Outlined.PersonOutline, title = "My Profile")
+        DrawerItem(
+            icon = Icons.Outlined.PersonOutline,
+            title = "My Profile",
+            onClick = {
+                Log.d("DrawerMenu", "My Profile clicked")
+                onMyProfileClick()
+                onClose() // drawer kapanması için
+            }
+        )
         Spacer(modifier = Modifier.height(12.dp))
 
         DrawerItem(icon = Icons.Outlined.BookmarkBorder, title = "Saved Places")
@@ -119,12 +129,16 @@ fun DrawerMenu(
 @Composable
 private fun DrawerItem(
     icon: androidx.compose.ui.graphics.vector.ImageVector,
-    title: String
+    title: String,
+    onClick: (() -> Unit)? = null
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(44.dp),
+            .height(44.dp)
+            .then(
+                if (onClick != null) Modifier.clickable { onClick() } else Modifier
+            ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(

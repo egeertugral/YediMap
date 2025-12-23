@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.LaunchedEffect
@@ -106,70 +107,78 @@ fun YediMapRoot() {
 fun YediMapApp() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
+    val currentRoute = navBackStackEntry?.destination?.route?.substringBefore("?")
+    val bottomBarHiddenRoutes = setOf(
+        "my_profile",
+        "drawer"
+    )
+
+    val shouldShowBottomBar = currentRoute !in bottomBarHiddenRoutes
+    var isDrawerOpen by remember { mutableStateOf(false) }
 
     Scaffold(
         bottomBar = {
-            NavigationBar(
-                containerColor = PrimaryPurple,  // #52489C arka plan
-                contentColor = Color.White,
-                        modifier = Modifier.height(56.dp)
-            ) {
-                Screen.bottomNavItems.forEach { screen ->
-                    val selected = currentRoute == screen.route
+            if (shouldShowBottomBar) {
+                NavigationBar(
+                    containerColor = PrimaryPurple,  // #52489C arka plan
+                    contentColor = Color.White,
+                    modifier = Modifier.height(56.dp)
+                ) {
+                    Screen.bottomNavItems.forEach { screen ->
+                        val selected = currentRoute == screen.route
 
-                    NavigationBarItem(
-                        selected = selected,
-                        onClick = {
-                            if (!selected) {
-                                navController.navigate(screen.route) {
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
+                        NavigationBarItem(
+                            selected = selected,
+                            onClick = {
+                                if (!selected) {
+                                    navController.navigate(screen.route) {
+                                        popUpTo(navController.graph.findStartDestination().id) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
                                     }
-                                    launchSingleTop = true
-                                    restoreState = true
                                 }
-                            }
-                        },
-                        icon = {
-                            // Seçili ikonda mor yuvarlak + hafif gölge efekti
-                            Box(
-                                modifier = Modifier.size(45.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                if (selected) {
-                                    Box(
-                                        modifier = Modifier
-                                            .matchParentSize()
-                                            .shadow(
-                                                elevation = 8.dp,
-                                                shape = CircleShape,
-                                                clip = false
-                                            )
-                                            .background(
-                                                color = Color(0xFF3E2F7D),
-                                                shape = CircleShape
-                                            )
+                            },
+                            icon = {
+                                // Seçili ikonda mor yuvarlak + hafif gölge efekti
+                                Box(
+                                    modifier = Modifier.size(45.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    if (selected) {
+                                        Box(
+                                            modifier = Modifier
+                                                .matchParentSize()
+                                                .shadow(
+                                                    elevation = 8.dp,
+                                                    shape = CircleShape,
+                                                    clip = false
+                                                )
+                                                .background(
+                                                    color = Color(0xFF3E2F7D),
+                                                    shape = CircleShape
+                                                )
+                                        )
+                                    }
+
+                                    Icon(
+                                        imageVector = screen.icon,
+                                        contentDescription = stringResource(id = screen.titleRes),
+                                        tint = Color.White,
+                                        modifier = Modifier.size(28.dp)
                                     )
                                 }
-
-                                Icon(
-                                    imageVector = screen.icon,
-                                    contentDescription = stringResource(id = screen.titleRes),
-                                    tint = Color.White,
-                                    modifier = Modifier.size(28.dp)
-                                )
-                            }
-                        },
-
-                        colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = Color.White,
-                            unselectedIconColor = Color.White.copy(alpha = 0.8f),
-                            selectedTextColor = Color.White,
-                            unselectedTextColor = Color.White.copy(alpha = 0.8f),
-                            indicatorColor = Color.Transparent // default pill'i kapat
+                            },
+                            colors = NavigationBarItemDefaults.colors(
+                                selectedIconColor = Color.White,
+                                unselectedIconColor = Color.White.copy(alpha = 0.8f),
+                                selectedTextColor = Color.White,
+                                unselectedTextColor = Color.White.copy(alpha = 0.8f),
+                                indicatorColor = Color.Transparent // default pill'i kapat
+                            )
                         )
-                    )
+                    }
                 }
             }
         }

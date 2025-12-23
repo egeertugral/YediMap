@@ -11,6 +11,7 @@ import androidx.compose.material.icons.outlined.FilterAlt
 import androidx.compose.material.icons.outlined.PersonOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,17 +32,23 @@ fun HomeScreen(
     onBackClick: () -> Unit = {},
     onMenuClick: () -> Unit = {},
     onFilterClick: () -> Unit = {},
-    onProfileClick: () -> Unit = {}
+    onProfileClick: () -> Unit = {},
+    onDrawerStateChange: (Boolean) -> Unit = {}
 ) {
     // ✅ Drawer state
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-
+    LaunchedEffect(drawerState.currentValue) {
+        onDrawerStateChange(drawerState.currentValue == DrawerValue.Open)
+    }
     // ✅ Drawer wrapper
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            DrawerMenu(onClose = { scope.launch { drawerState.close() } })
+            DrawerMenu(onClose = { scope.launch { drawerState.close() } },
+                onMyProfileClick = {
+                    onProfileClick() // HomeScreen parametresini tetikle
+                })
         }
     ) {
         // ✅ Senin mevcut Home UI aynen burada
@@ -79,12 +86,12 @@ fun HomeScreen(
                 Row(verticalAlignment = Alignment.CenterVertically) {
 
                     // ✅ Menü ikonuna basınca Drawer aç
-                    IconButton(onClick = {
-                        // istersen bunu da çağır:
-                        // onMenuClick()
-
-                        scope.launch { drawerState.open() }
-                    }) {
+                    IconButton(
+                        onClick = {
+                            scope.launch { drawerState.open() }
+                            onMenuClick()
+                        }
+                    ) {
                         Icon(Icons.Default.Menu, contentDescription = "Menu", tint = HomePurple)
                     }
 
