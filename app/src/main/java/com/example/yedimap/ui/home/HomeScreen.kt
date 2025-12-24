@@ -2,6 +2,7 @@ package com.example.yedimap.ui.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -33,6 +34,7 @@ fun HomeScreen(
     onMenuClick: () -> Unit = {},
     onFilterClick: () -> Unit = {},
     onProfileClick: () -> Unit = {},
+    onCafeteriaClick: () -> Unit = {},
     onDrawerStateChange: (Boolean) -> Unit = {}
 ) {
     // ✅ Drawer state
@@ -47,7 +49,7 @@ fun HomeScreen(
         drawerContent = {
             DrawerMenu(onClose = { scope.launch { drawerState.close() } },
                 onMyProfileClick = {
-                    onProfileClick() // HomeScreen parametresini tetikle
+                    onProfileClick()
                 })
         }
     ) {
@@ -165,7 +167,7 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     HomeActionCard(text = "Floors", modifier = Modifier.weight(1f))
-                    HomeActionCard(text = "Cafeteria", modifier = Modifier.weight(1f))
+                    HomeActionCard(text = "Cafeteria", modifier = Modifier.weight(1f),onClick = onCafeteriaClick)
                 }
             }
         }
@@ -175,10 +177,13 @@ fun HomeScreen(
 @Composable
 private fun HomeActionCard(
     text: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null
 ) {
     Surface(
-        modifier = modifier.height(90.dp),
+        modifier = modifier
+            .height(90.dp)
+            .then(if (onClick != null) Modifier.clickable { onClick() } else Modifier),
         color = HomePurple,
         shape = RoundedCornerShape(20.dp),
         tonalElevation = 0.dp,
