@@ -110,7 +110,8 @@ fun YediMapApp() {
     val currentRoute = navBackStackEntry?.destination?.route?.substringBefore("?")
     val bottomBarHiddenRoutes = setOf(
         "my_profile",
-        "drawer"
+        "drawer",
+        "cafeteria"
     )
 
     val shouldShowBottomBar = currentRoute !in bottomBarHiddenRoutes
