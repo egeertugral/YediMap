@@ -40,6 +40,11 @@ fun YediMapNavGraph(
         composable(Screen.Schedule.route) {
             ScheduleScreen()
         }
+        composable(Screen.Settings.route) {
+            SettingsScreen(
+                onBackClick = { navController.popBackStack() }
+            )
+        }
 
         composable(Screen.Notifications.route) {
             NotificationsScreen()
