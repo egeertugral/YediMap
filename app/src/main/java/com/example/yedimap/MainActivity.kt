@@ -111,7 +111,8 @@ fun YediMapApp() {
     val bottomBarHiddenRoutes = setOf(
         "my_profile",
         "drawer",
-        "cafeteria"
+        "cafeteria",
+        Screen.Settings.route
     )
 
     val shouldShowBottomBar = currentRoute !in bottomBarHiddenRoutes

@@ -35,7 +35,8 @@ fun HomeScreen(
     onFilterClick: () -> Unit = {},
     onProfileClick: () -> Unit = {},
     onCafeteriaClick: () -> Unit = {},
-    onDrawerStateChange: (Boolean) -> Unit = {}
+    onDrawerStateChange: (Boolean) -> Unit = {},
+    onSettingsClick: () -> Unit = {}
 ) {
     // ✅ Drawer state
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -47,11 +48,24 @@ fun HomeScreen(
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            DrawerMenu(onClose = { scope.launch { drawerState.close() } },
+
+            DrawerMenu(
+                onClose = {
+                    scope.launch { drawerState.close() }
+                },
                 onMyProfileClick = {
+                    scope.launch { drawerState.close() }
                     onProfileClick()
-                })
+                },
+                onSettingsClick = {
+                    scope.launch { drawerState.close() }
+                    onSettingsClick()
+                }
+            )
+
+
         }
+
     ) {
         // ✅ Senin mevcut Home UI aynen burada
         Column(

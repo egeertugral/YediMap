@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.yedimap.R
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.outlined.Settings
 
 sealed class Screen(
     val route: String,
@@ -44,6 +45,13 @@ sealed class Screen(
         titleRes = R.string.nav_my_profile, // bunu strings.xml'e ekleyeceğiz
         icon = Icons.Filled.Person // ikon zorunlu olduğu için veriyoruz
     )
+
+    object Settings : Screen(
+        route = "settings",
+        titleRes = R.string.nav_settings,
+        icon = Icons.Outlined.Settings
+    )
+
 
     companion object {
         val bottomNavItems = listOf(Home, Map, Schedule, Notifications)    }
