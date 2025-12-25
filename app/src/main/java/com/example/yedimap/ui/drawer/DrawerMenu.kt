@@ -34,10 +34,12 @@ private val DrawerPurple = Color(0xFF614184)
 @Composable
 fun DrawerMenu(
     modifier: Modifier = Modifier,
-    name: String = "Kutay Büyükboyacı",
-    email: String = "kutay.buyukboyaci@std.yeditepe.edu.tr",
+    name: String = "Sadettin Saran",
+    email: String = "sadettin.saran@std.yeditepe.edu.tr",
     onClose: () -> Unit = {},
-    onMyProfileClick: () -> Unit = {}
+    onMyProfileClick: () -> Unit = {},
+    onSettingsClick: () -> Unit = {}
+
 ) {
     Column(
         modifier = modifier
@@ -114,7 +116,11 @@ fun DrawerMenu(
         DrawerItem(icon = Icons.Outlined.BookmarkBorder, title = "Saved Places")
         Spacer(modifier = Modifier.height(12.dp))
 
-        DrawerItem(icon = Icons.Outlined.Settings, title = "Settings")
+        DrawerItem(
+            icon = Icons.Outlined.Settings,
+            title = "Settings",
+            onClick = onSettingsClick
+        )
 
         Spacer(modifier = Modifier.weight(1f))
 
