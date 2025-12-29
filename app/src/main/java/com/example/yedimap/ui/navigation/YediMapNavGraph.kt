@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.yedimap.ui.about.AboutYediMapScreen
 import com.example.yedimap.ui.cafeteria.CafeteriaScreen
 import com.example.yedimap.ui.map.MapScreen
 import com.example.yedimap.ui.notifications.NotificationsScreen
@@ -40,9 +41,15 @@ fun YediMapNavGraph(
         composable(Screen.Schedule.route) {
             ScheduleScreen()
         }
+        composable(Screen.AboutYediMap.route) {
+            AboutYediMapScreen(
+                onBackClick = { navController.popBackStack() } // ✅ Settings’e geri döner
+            )
+        }
         composable(Screen.Settings.route) {
             SettingsScreen(
-                onBackClick = { navController.popBackStack() }
+                onBackClick = { navController.popBackStack() },
+                onAboutClick = { navController.navigate(Screen.AboutYediMap.route) }
             )
         }
 
