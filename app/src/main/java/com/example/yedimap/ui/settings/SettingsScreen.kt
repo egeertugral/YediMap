@@ -1,6 +1,7 @@
 package com.example.yedimap.ui.settings
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -25,7 +26,8 @@ private val HomePurple = Color(0xFF614184)
 @Composable
 fun SettingsScreen(
     onBackClick: () -> Unit = {},
-    onFilterClick: () -> Unit = {}
+    onFilterClick: () -> Unit = {},
+    onAboutClick: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -82,7 +84,7 @@ fun SettingsScreen(
 
         Spacer(modifier = Modifier.height(28.dp))
 
-        SettingsItem(title = "About YediMap")
+        SettingsItem(title = "About YediMap", onClick = onAboutClick)
         Spacer(modifier = Modifier.height(24.dp))
 
         SettingsItem(title = "Profile Information")
@@ -116,6 +118,7 @@ private fun SettingsItem(
         Row(
             modifier = Modifier
                 .fillMaxSize()
+                .clickable { onClick() }
                 .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {

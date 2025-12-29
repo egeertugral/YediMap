@@ -45,6 +45,11 @@ sealed class Screen(
         titleRes = R.string.nav_my_profile, // bunu strings.xml'e ekleyeceğiz
         icon = Icons.Filled.Person // ikon zorunlu olduğu için veriyoruz
     )
+    object AboutYediMap : Screen(
+        route = "about_yedimap",
+        titleRes = R.string.nav_home,
+        icon = Icons.Filled.Home
+    )
 
     object Settings : Screen(
         route = "settings",
