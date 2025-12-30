@@ -9,6 +9,7 @@ import com.example.yedimap.ui.about.AboutYediMapScreen
 import com.example.yedimap.ui.auth.LoginScreen
 import com.example.yedimap.ui.auth.SignupScreen
 import com.example.yedimap.ui.cafeteria.CafeteriaScreen
+import com.example.yedimap.ui.floors.FloorsScreen
 import com.example.yedimap.ui.map.MapScreen
 import com.example.yedimap.ui.notifications.NotificationsScreen
 import com.example.yedimap.ui.schedule.ScheduleScreen
@@ -31,10 +32,18 @@ fun YediMapNavGraph(
                 onProfileClick = {
                     navController.navigate(Screen.MyProfile.route)
                 },
+
+                onFloorsClick = { navController.navigate("floors") },
+
                 onCafeteriaClick = {
                     navController.navigate("cafeteria")
                 },
                 onSettingsClick = { navController.navigate(Screen.Settings.route) }
+            )
+        }
+        composable("floors") {
+            FloorsScreen(
+                onBackClick = { navController.popBackStack() } // Home'a döner
             )
         }
         composable(Screen.Map.route) {
