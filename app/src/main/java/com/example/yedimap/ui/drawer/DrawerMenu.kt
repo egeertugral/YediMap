@@ -34,13 +34,14 @@ private val DrawerPurple = Color(0xFF614184)
 @Composable
 fun DrawerMenu(
     modifier: Modifier = Modifier,
-    name: String = "Sadettin Saran",
-    email: String = "sadettin.saran@std.yeditepe.edu.tr",
+    name: String,
+    email: String,
     onClose: () -> Unit = {},
     onMyProfileClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {}
 
 ) {
+
     Column(
         modifier = modifier
             .fillMaxHeight()

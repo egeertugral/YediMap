@@ -13,6 +13,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,14 +23,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.yedimap.R
+import com.example.yedimap.ui.auth.AuthViewModel
 
 private val ProfilePurple = Color(0xFF614184)
 
 @Composable
 fun MyProfileScreen(
-    onBackClick: () -> Unit = {}
+    onBackClick: () -> Unit = {},
+    vm: AuthViewModel = viewModel()
 ) {
+    val user by vm.currentUser.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -95,10 +102,11 @@ fun MyProfileScreen(
 
         Spacer(modifier = Modifier.height(60.dp))
 
-        ProfileField(title = "NAME", value = "Selin Yılmaz")
-        ProfileField(title = "EMAIL", value = "selin.yilmaz@std.yeditepe.edu.tr")
-        ProfileField(title = "FACULTY", value = "Faculty of Fine Arts")
-        ProfileField(title = "PHONE", value = "+90 532 654 21 89")
+        // ✅ DataStore'dan gelen bilgiler
+        ProfileField(title = "NAME", value = user?.fullName ?: "—")
+        ProfileField(title = "EMAIL", value = user?.email ?: "—")
+        ProfileField(title = "FACULTY", value = user?.faculty ?: "—")
+        ProfileField(title = "PHONE", value = user?.phone ?: "—")
     }
 }
 

@@ -25,6 +25,10 @@ import androidx.compose.ui.unit.sp
 import com.example.yedimap.R
 import com.example.yedimap.ui.drawer.DrawerMenu
 import kotlinx.coroutines.launch
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import com.example.yedimap.ui.auth.AuthViewModel
 
 private val HomePurple = Color(0xFF614184)
 
@@ -38,6 +42,8 @@ fun HomeScreen(
     onDrawerStateChange: (Boolean) -> Unit = {},
     onSettingsClick: () -> Unit = {}
 ) {
+    val vm: AuthViewModel = viewModel()
+    val user by vm.currentUser.collectAsState()
     // ✅ Drawer state
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -50,6 +56,8 @@ fun HomeScreen(
         drawerContent = {
 
             DrawerMenu(
+                name = user?.fullName ?: "Guest",
+                email = user?.email ?: "guest@yeditepe.edu.tr",
                 onClose = {
                     scope.launch { drawerState.close() }
                 },
