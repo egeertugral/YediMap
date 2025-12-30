@@ -6,6 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.yedimap.ui.about.AboutYediMapScreen
+import com.example.yedimap.ui.auth.LoginScreen
+import com.example.yedimap.ui.auth.SignupScreen
 import com.example.yedimap.ui.cafeteria.CafeteriaScreen
 import com.example.yedimap.ui.map.MapScreen
 import com.example.yedimap.ui.notifications.NotificationsScreen
@@ -52,7 +54,24 @@ fun YediMapNavGraph(
                 onAboutClick = { navController.navigate(Screen.AboutYediMap.route) }
             )
         }
-
+        composable("login") {
+            LoginScreen(
+                onBack = { navController.popBackStack() }, // ProfileSelection'a döner (stack doğruysa)
+                onSignUp = { navController.navigate("signup") },
+                onLoginSuccess = {
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo("login") { inclusive = true }
+                        launchSingleTop = true
+                    }
+                }
+            )
+        }
+        composable("signup") {
+            SignupScreen(
+                onBack = { navController.popBackStack() }, // login'e döner
+                onSignupSuccess = { navController.popBackStack() } // login'e döner
+            )
+        }
         composable(Screen.Notifications.route) {
             NotificationsScreen()
         }

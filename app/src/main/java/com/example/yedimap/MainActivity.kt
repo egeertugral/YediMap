@@ -43,6 +43,8 @@ import com.example.yedimap.ui.language.LanguageSelectionScreen
 import com.example.yedimap.ui.profile.ProfileSelectionScreen
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.example.yedimap.ui.auth.LoginScreen
+import com.example.yedimap.ui.auth.SignupScreen
 import com.example.yedimap.ui.theme.PrimaryPurple
 
 class MainActivity : ComponentActivity() {
@@ -59,6 +61,8 @@ class MainActivity : ComponentActivity() {
 enum class OnboardingStep {
     LANGUAGE,
     PROFILE,
+    LOGIN,
+    SIGNUP,
     MAIN
 }
 
@@ -83,12 +87,25 @@ fun YediMapRoot() {
                     }
                 )
             }
+            OnboardingStep.LOGIN -> {
+                LoginScreen(
+                    onBack = { currentStep = OnboardingStep.PROFILE },
+                    onSignUp = { currentStep = OnboardingStep.SIGNUP },
+                    onLoginSuccess = { currentStep = OnboardingStep.MAIN }
+                )
+            }
+            OnboardingStep.SIGNUP -> {
+                SignupScreen(
+                    onBack = { currentStep = OnboardingStep.LOGIN },
+                    onSignupSuccess = { currentStep = OnboardingStep.LOGIN }
+                )
+            }
             OnboardingStep.PROFILE -> {
                 ProfileSelectionScreen(
                     onBackClick = { currentStep = OnboardingStep.LANGUAGE },
                     onStudentClick = {
                         // TODO: ileride Student onboarding / main app
-                        currentStep = OnboardingStep.MAIN
+                        currentStep = OnboardingStep.LOGIN
                     },
                     onVisitorClick = {
                         // TODO: ileride Visitor onboarding / main app
@@ -112,6 +129,8 @@ fun YediMapApp() {
         "my_profile",
         "drawer",
         "cafeteria",
+        "login",
+        "signup",
         Screen.Settings.route,
         Screen.AboutYediMap.route
     )
