@@ -130,6 +130,7 @@ fun YediMapApp() {
         "drawer",
         "cafeteria",
         "login",
+        "floors",
         "signup",
         Screen.Settings.route,
         Screen.AboutYediMap.route

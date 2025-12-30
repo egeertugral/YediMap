@@ -40,7 +40,8 @@ fun HomeScreen(
     onProfileClick: () -> Unit = {},
     onCafeteriaClick: () -> Unit = {},
     onDrawerStateChange: (Boolean) -> Unit = {},
-    onSettingsClick: () -> Unit = {}
+    onSettingsClick: () -> Unit = {},
+    onFloorsClick: () -> Unit = {}
 ) {
     val vm: AuthViewModel = viewModel()
     val user by vm.currentUser.collectAsState()
@@ -188,7 +189,7 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    HomeActionCard(text = "Floors", modifier = Modifier.weight(1f))
+                    HomeActionCard(text = "Floors", modifier = Modifier.weight(1f),onClick = onFloorsClick)
                     HomeActionCard(text = "Cafeteria", modifier = Modifier.weight(1f),onClick = onCafeteriaClick)
                 }
             }
