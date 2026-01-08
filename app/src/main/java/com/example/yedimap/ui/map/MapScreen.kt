@@ -85,8 +85,8 @@ data class MapItem(
     val name: String,
     val type: MapItemType,
     val center: LatLng,
-    val polygon: List<LatLng>? = null,   // polygon varsa alan çizer
-    val classes: List<String>? = null    // sadece 1 fakültede dolu olacak
+    val polygon: List<LatLng>? = null,   // polygon alan çizer
+    val classes: List<String>? = null
 )
 
 /* =========================
@@ -103,13 +103,13 @@ object MapColors {
     val ringFill = Color(0xFF111111)
 
     // SPORT
-    val basketFill = Color(0x553F51B5)   // koyu mavi (fill)
+    val basketFill = Color(0x553F51B5)
     val basketStroke = Color(0xFF3F51B5)
 
-    val tennisFill = Color(0x552ECC71)   // yeşil (fill)
+    val tennisFill = Color(0x552ECC71)
     val tennisStroke = Color(0xFF2ECC71)
 
-    val footballFill = Color(0x554CAF50) // yeşil (fill)
+    val footballFill = Color(0x554CAF50)
     val footballStroke = Color(0xFF4CAF50)
 
     // POOL
@@ -140,8 +140,8 @@ object MapColors {
     val prepStroke = Color(0xFFE53935)
 
     // REKTÖRLÜK -> daha koyu kahverengi
-    val rectorateFill = Color(0x556D4C41)   // darker brown fill
-    val rectorateStroke = Color(0xFF4E342E) // darker brown stroke
+    val rectorateFill = Color(0x556D4C41)
+    val rectorateStroke = Color(0xFF4E342E)
 
     // SOSYAL TESİSLER -> mor
     val socialFill = Color(0x558E24AA)
@@ -152,11 +152,11 @@ object MapColors {
 
     // Campus mask
     val outsideMask = Color(0xCC1B3A28)
-    val campusBorder = Color(0xFF2E7D32) // daha koyu yeşil sınır
+    val campusBorder = Color(0xFF2E7D32)
 
-    // FUTURE CENTER (more brown, warm tone)
-    val futureCenterFill = Color(0x556D5A4A)   // warm brown fill
-    val futureCenterStroke = Color(0xFF5D4037) // deeper brown stroke
+    //
+    val futureCenterFill = Color(0x556D5A4A)
+    val futureCenterStroke = Color(0xFF5D4037)
 }
 
 /* =========================
@@ -190,8 +190,7 @@ private fun colorsFor(type: MapItemType): Pair<Color, Color> {
 }
 
 private fun isClassFaculty(item: MapItem): Boolean {
-    // sınıf listesi sadece 1 fakültede gösterilecek demiştin:
-    // classes != null ise o fakülte “sınıflı” kabul edelim.
+
     return item.type == MapItemType.FACULTY && !item.classes.isNullOrEmpty()
 }
 
@@ -298,7 +297,7 @@ fun MapScreen() {
     val view = LocalView.current
     val scope = rememberCoroutineScope()
 
-    // Always start the map from the same camera position when returning to this screen
+    // Always start the map from the same camera position
     val initialCameraPosition = remember {
         CameraPosition.fromLatLngZoom(
             LatLng(40.97205, 29.15250),
@@ -351,7 +350,7 @@ fun MapScreen() {
         builder.build()
     }
 
-    // ===== MAP ITEMS (SEN BURAYI BÜYÜTECEKSİN) =====
+    // ===== MAP ITEMS !!!! =====
     val mapItems = listOf(
         // FACULTY OF ENGINEERING & NATURAL SCIENCES (polygon)
         MapItem(
@@ -485,12 +484,12 @@ fun MapScreen() {
                 LatLng(40.9710466, 29.1541770)
             ),
             classes = listOf(
-                "FA101 - Drawing Studio",
-                "FA102 - Basic Design",
-                "FA201 - Digital Illustration",
-                "FA205 - Photography Studio",
-                "FA301 - Art History",
-                "FA310 - Sculpture Workshop"
+               // "FA101 - Drawing Studio",
+               // "FA102 - Basic Design",
+               // "FA201 - Digital Illustration",
+               // "FA205 - Photography Studio",
+               // "FA301 - Art History",
+               // "FA310 - Sculpture Workshop"
             )
         ),
 
@@ -1082,7 +1081,7 @@ fun MapScreen() {
         // GELECEK MERKEZİ (FUTURE CENTER)
         MapItem(
             id = "future_center",
-            name = "GELECEK MERKEZİ",
+            name = "FUTURE CENTER",
             type = MapItemType.FUTURE_CENTER,
             center = LatLng(40.9740000, 29.1534300),
             polygon = listOf(
@@ -1348,7 +1347,7 @@ fun MapScreen() {
 
         }
 
-        // If BOTH the guide (info) panel and the building sheet are open (should be rare),
+        // If BOTH the guide (info) panel and the building sheet are open
         // a tap anywhere should close both immediately.
         if (showLegend && selectedItem != null) {
             Box(
@@ -1568,8 +1567,8 @@ fun MapScreen() {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        // IMPORTANT: fixed height so the sheet NEVER pushes upward as content grows
-                        // (user requested: stays at the same vertical stop)
+                        //  fixed height so the sheet NEVER pushes upward as content grows
+                        // user requested: stays at the same vertical stop
                         .height(if (isClassFaculty(item)) 240.dp else 170.dp)
                         .background(
                             Color.White,
@@ -1659,12 +1658,18 @@ fun MapScreen() {
                         ) {
                             Text("Directions")
                         }
-
+                        Spacer(modifier = Modifier.height(6.dp))
+                        //Text(
+                          //  text = "Tap anywhere on the map to close.",
+                          //  style = MaterialTheme.typography.bodySmall,
+                          //  color = Color.Gray,
+                           // modifier = Modifier.fillMaxWidth(),
+                      //  )
                         Spacer(modifier = Modifier.height(16.dp))
 
                         // Scrollable content area (so the sheet height never grows)
                         // Content area:
-// - If this is the only faculty with classes -> scrollable list
+// - If this is the faculty with classes -> scrollable list
 // - Otherwise -> keep it empty and reserve space so the footer is always visible
                         if (isClassFaculty(item)) {
                             val sheetScroll = rememberScrollState()
@@ -1698,14 +1703,6 @@ fun MapScreen() {
                             Spacer(modifier = Modifier.weight(1f, fill = true))
                         }
 
-// Footer hint should always be visible at the bottom of the sheet
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = "Tap anywhere on the map to close.",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = Color.Gray,
-                            modifier = Modifier.fillMaxWidth()
-                        )
                     }
                 }
             }
