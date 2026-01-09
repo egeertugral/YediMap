@@ -11,10 +11,11 @@ import com.example.yedimap.ui.auth.SignupScreen
 import com.example.yedimap.ui.cafeteria.CafeteriaScreen
 import com.example.yedimap.ui.floors.FloorsScreen
 import com.example.yedimap.ui.map.MapScreen
-import com.example.yedimap.ui.notifications.NotificationsScreen
 import com.example.yedimap.ui.schedule.ScheduleScreen
 import com.example.yedimap.ui.home.HomeScreen
 import com.example.yedimap.ui.myprofile.MyProfileScreen
+import com.example.yedimap.ui.notifications.FeedbackScreen
+import com.example.yedimap.ui.notifications.ThankYouScreen
 import com.example.yedimap.ui.settings.SettingsScreen
 
 @Composable
@@ -82,7 +83,26 @@ fun YediMapNavGraph(
             )
         }
         composable(Screen.Notifications.route) {
-            NotificationsScreen()
+            FeedbackScreen(
+                onClose = {
+                    navController.navigate(Screen.Home.route) {
+                        launchSingleTop = true
+                    }
+                },
+                onSubmit = {
+                    navController.navigate("thank_you")
+                }
+            )
+        }
+        composable("thank_you") {
+            ThankYouScreen(
+                onDone = {
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo("thank_you") { inclusive = true }
+                        launchSingleTop = true
+                    }
+                }
+            )
         }
         composable(Screen.MyProfile.route) {
             MyProfileScreen(onBackClick = { navController.popBackStack() })
