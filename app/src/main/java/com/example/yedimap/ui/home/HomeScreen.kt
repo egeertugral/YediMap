@@ -41,7 +41,8 @@ fun HomeScreen(
     onCafeteriaClick: () -> Unit = {},
     onDrawerStateChange: (Boolean) -> Unit = {},
     onSettingsClick: () -> Unit = {},
-    onFloorsClick: () -> Unit = {}
+    onFloorsClick: () -> Unit = {},
+    onLogoutClick: () -> Unit = {}
 ) {
     val vm: AuthViewModel = viewModel()
     val user by vm.currentUser.collectAsState()
@@ -69,6 +70,11 @@ fun HomeScreen(
                 onSettingsClick = {
                     scope.launch { drawerState.close() }
                     onSettingsClick()
+                },
+                onLogoutClick = {
+                    // ✅ Önce drawer kapansın, sonra logout
+                    scope.launch { drawerState.close() }
+                    onLogoutClick()
                 }
             )
 

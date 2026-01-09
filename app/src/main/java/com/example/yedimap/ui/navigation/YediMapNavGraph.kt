@@ -2,10 +2,13 @@ package com.example.yedimap.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.yedimap.ui.about.AboutYediMapScreen
+import com.example.yedimap.ui.auth.AuthViewModel
 import com.example.yedimap.ui.auth.LoginScreen
 import com.example.yedimap.ui.auth.SignupScreen
 import com.example.yedimap.ui.cafeteria.CafeteriaScreen
@@ -29,6 +32,7 @@ fun YediMapNavGraph(
         modifier = modifier
     ) {
         composable(Screen.Home.route) {
+            val vm: AuthViewModel = viewModel()
             HomeScreen(
                 onProfileClick = {
                     navController.navigate(Screen.MyProfile.route)
@@ -39,7 +43,15 @@ fun YediMapNavGraph(
                 onCafeteriaClick = {
                     navController.navigate("cafeteria")
                 },
-                onSettingsClick = { navController.navigate(Screen.Settings.route) }
+                onSettingsClick = { navController.navigate(Screen.Settings.route) },
+                onLogoutClick = {
+                    vm.logout {
+                        navController.navigate("login") {
+                            popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    }
+                }
             )
         }
         composable("floors") {
@@ -59,9 +71,19 @@ fun YediMapNavGraph(
             )
         }
         composable(Screen.Settings.route) {
+            val vm: AuthViewModel = viewModel()
+
             SettingsScreen(
                 onBackClick = { navController.popBackStack() },
-                onAboutClick = { navController.navigate(Screen.AboutYediMap.route) }
+                onAboutClick = { navController.navigate(Screen.AboutYediMap.route) },
+                        onLogoutClick = {
+                    vm.logout {
+                        navController.navigate("login") {
+                            popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    }
+                }
             )
         }
         composable("login") {

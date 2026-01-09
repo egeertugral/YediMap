@@ -38,8 +38,8 @@ fun DrawerMenu(
     email: String,
     onClose: () -> Unit = {},
     onMyProfileClick: () -> Unit = {},
-    onSettingsClick: () -> Unit = {}
-
+    onSettingsClick: () -> Unit = {},
+    onLogoutClick: () -> Unit = {}
 ) {
 
     Column(
@@ -128,8 +128,11 @@ fun DrawerMenu(
         Divider(color = Color.White.copy(alpha = 0.18f))
         Spacer(modifier = Modifier.height(14.dp))
 
-        // Logout (PASİF)
-        DrawerItem(icon = Icons.Outlined.Logout, title = "Log Out")
+        DrawerItem(
+            icon = Icons.Outlined.Logout,
+            title = "Log Out",
+            onClick = onLogoutClick
+        )
     }
 }
 
