@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.ChevronRight
 import androidx.compose.material.icons.outlined.FilterAlt
+import androidx.compose.material.icons.outlined.Logout
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
@@ -16,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,7 +29,8 @@ private val HomePurple = Color(0xFF614184)
 fun SettingsScreen(
     onBackClick: () -> Unit = {},
     onFilterClick: () -> Unit = {},
-    onAboutClick: () -> Unit = {}
+    onAboutClick: () -> Unit = {},
+    onLogoutClick: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -96,15 +99,19 @@ fun SettingsScreen(
         SettingsItem(title = "Language")
         Spacer(modifier = Modifier.height(24.dp))
 
-        SettingsItem(title = "Log Out")
-    }
+        SettingsItem(
+            title = "Log Out",
+            leadingIcon = Icons.Outlined.Logout,
+            onClick = onLogoutClick
+        )   }
 }
 
 
 @Composable
 private fun SettingsItem(
     title: String,
-    onClick: () -> Unit = {} // şimdilik pasif
+    onClick: () -> Unit = {}, // şimdilik pasif
+    leadingIcon: ImageVector? = null // ✅ EKLENDİ: sol ikon (örn Log Out)
 ) {
     Surface(
         modifier = Modifier
@@ -122,13 +129,26 @@ private fun SettingsItem(
                 .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+
+            // ✅ Sol ikon (opsiyonel)
+            if (leadingIcon != null) {
+                Icon(
+                    imageVector = leadingIcon,
+                    contentDescription = null,
+                    tint = Color.White
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+            }
+
             Text(
                 text = title,
                 color = Color.White,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold
             )
+
             Spacer(modifier = Modifier.weight(1f))
+
             Icon(
                 imageVector = Icons.Outlined.ChevronRight,
                 contentDescription = "Go",
@@ -137,3 +157,5 @@ private fun SettingsItem(
         }
     }
 }
+
+
