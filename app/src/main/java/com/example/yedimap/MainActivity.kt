@@ -134,7 +134,8 @@ fun YediMapApp() {
         "signup",
         Screen.Settings.route,
         Screen.AboutYediMap.route,
-        "thank_you"
+        "thank_you",
+        "ring_stops"
     )
 
     val shouldShowBottomBar = currentRoute !in bottomBarHiddenRoutes
