@@ -42,7 +42,8 @@ fun HomeScreen(
     onDrawerStateChange: (Boolean) -> Unit = {},
     onSettingsClick: () -> Unit = {},
     onFloorsClick: () -> Unit = {},
-    onLogoutClick: () -> Unit = {}
+    onLogoutClick: () -> Unit = {},
+    onRingStopClick: () -> Unit = {}
 ) {
     val vm: AuthViewModel = viewModel()
     val user by vm.currentUser.collectAsState()
@@ -188,7 +189,12 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     HomeActionCard(text = "Major", modifier = Modifier.weight(1f))
-                    HomeActionCard(text = "Ring Stop", modifier = Modifier.weight(1f))
+                    HomeActionCard(
+                        text = "Ring Stop",
+                        modifier = Modifier
+                            .weight(1f)
+                            .clickable { onRingStopClick() }
+                    )
                 }
 
                 Row(

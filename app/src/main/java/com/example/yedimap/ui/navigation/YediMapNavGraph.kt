@@ -19,6 +19,7 @@ import com.example.yedimap.ui.home.HomeScreen
 import com.example.yedimap.ui.myprofile.MyProfileScreen
 import com.example.yedimap.ui.notifications.FeedbackScreen
 import com.example.yedimap.ui.notifications.ThankYouScreen
+import com.example.yedimap.ui.ringstops.RingStopsScreen
 import com.example.yedimap.ui.settings.SettingsScreen
 
 @Composable
@@ -43,6 +44,7 @@ fun YediMapNavGraph(
                 onCafeteriaClick = {
                     navController.navigate("cafeteria")
                 },
+                onRingStopClick = { navController.navigate("ring_stops") },
                 onSettingsClick = { navController.navigate(Screen.Settings.route) },
                 onLogoutClick = {
                     vm.logout {
@@ -61,6 +63,11 @@ fun YediMapNavGraph(
         }
         composable(Screen.Map.route) {
             MapScreen()
+        }
+        composable("ring_stops") {
+            RingStopsScreen(
+                onBackClick = { navController.popBackStack() } // Home’a döner
+            )
         }
         composable(Screen.Schedule.route) {
             ScheduleScreen()
