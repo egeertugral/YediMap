@@ -127,13 +127,13 @@ fun HomeScreen(
                         Icon(Icons.Default.Menu, contentDescription = "Menu", tint = HomePurple)
                     }
 
-                    IconButton(onClick = onFilterClick) {
+                    /*IconButton(onClick = onFilterClick) {
                         Icon(
                             imageVector = Icons.Outlined.FilterAlt,
                             contentDescription = "Filter",
                             tint = HomePurple
                         )
-                    }
+                    }*/
                 }
 
                 Box(
