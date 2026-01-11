@@ -18,6 +18,7 @@ import com.example.yedimap.ui.floors.FloorsScreen
 import com.example.yedimap.ui.map.MapScreen
 import com.example.yedimap.ui.schedule.ScheduleScreen
 import com.example.yedimap.ui.home.HomeScreen
+import com.example.yedimap.ui.major.MajorScreen
 import com.example.yedimap.ui.myprofile.MyProfileScreen
 import com.example.yedimap.ui.notifications.FeedbackScreen
 import com.example.yedimap.ui.notifications.ThankYouScreen
@@ -40,6 +41,7 @@ fun YediMapNavGraph(
                 onProfileClick = {
                     navController.navigate(Screen.MyProfile.route)
                 },
+                onMajorClick = { navController.navigate("major") },
 
                 onFloorsClick = { navController.navigate("floors") },
 
@@ -65,6 +67,11 @@ fun YediMapNavGraph(
         }
         composable(Screen.Map.route) {
             MapScreen()
+        }
+        composable("major") {
+            MajorScreen(
+                onBackClick = { navController.popBackStack() }
+            )
         }
         composable("ring_stops") {
             RingStopsScreen(
