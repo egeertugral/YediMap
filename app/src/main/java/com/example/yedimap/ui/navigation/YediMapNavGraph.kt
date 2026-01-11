@@ -1,6 +1,8 @@
 package com.example.yedimap.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -70,7 +72,15 @@ fun YediMapNavGraph(
             )
         }
         composable(Screen.Schedule.route) {
-            ScheduleScreen()
+            val authVm: AuthViewModel = viewModel()
+            val user by authVm.currentUser.collectAsState()
+
+            val studentNo = user?.studentNo ?: "20231234" // fallback seed student
+
+            ScheduleScreen(
+                studentNo = studentNo,
+                onBackClick = { navController.popBackStack() }
+            )
         }
         composable(Screen.AboutYediMap.route) {
             AboutYediMapScreen(
