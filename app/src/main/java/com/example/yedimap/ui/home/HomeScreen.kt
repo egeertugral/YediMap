@@ -43,7 +43,9 @@ fun HomeScreen(
     onSettingsClick: () -> Unit = {},
     onFloorsClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},
-    onRingStopClick: () -> Unit = {}
+    onRingStopClick: () -> Unit = {},
+    onMajorClick: () -> Unit = {}
+
 ) {
     val vm: AuthViewModel = viewModel()
     val user by vm.currentUser.collectAsState()
@@ -53,7 +55,6 @@ fun HomeScreen(
     LaunchedEffect(drawerState.currentValue) {
         onDrawerStateChange(drawerState.currentValue == DrawerValue.Open)
     }
-    // ✅ Drawer wrapper
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -83,7 +84,6 @@ fun HomeScreen(
         }
 
     ) {
-        // ✅ Senin mevcut Home UI aynen burada
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -106,7 +106,6 @@ fun HomeScreen(
                 }
             }
 
-            // ⚠️ Bu spacer Column içinde width olduğu için etkisiz, istersen height yap
             Spacer(modifier = Modifier.height(6.dp))
 
             Row(
@@ -188,7 +187,11 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    HomeActionCard(text = "Major", modifier = Modifier.weight(1f))
+                    HomeActionCard(
+                        text = "Major",
+                        modifier = Modifier.weight(1f),
+                        onClick = { onMajorClick() }
+                    )
                     HomeActionCard(
                         text = "Ring Stop",
                         modifier = Modifier
